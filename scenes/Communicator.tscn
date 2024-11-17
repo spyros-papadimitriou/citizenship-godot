@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/Communicator.gd" type="Script" id=1]
+
+[node name="Communicator" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="HTTPRequestGameRetrieve" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestGameCurrentStatus" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestGoToFacility" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestGoToLocation" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestFeaturesRetrieve" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestPersonsRetrieve" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestCatchPerson" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestGameCreate" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="HTTPRequestGameRetrieve" to="." method="_on_HTTPRequestGameRetrieve_request_completed"]
+[connection signal="request_completed" from="HTTPRequestGameCurrentStatus" to="." method="_on_HTTPRequestGameCurrentStatus_request_completed"]
+[connection signal="request_completed" from="HTTPRequestGoToFacility" to="." method="_on_HTTPRequestGoToFacility_request_completed"]
+[connection signal="request_completed" from="HTTPRequestGoToLocation" to="." method="_on_HTTPRequestGoToLocation_request_completed"]
+[connection signal="request_completed" from="HTTPRequestFeaturesRetrieve" to="." method="_on_HTTPRequestFeaturesRetrieve_request_completed"]
+[connection signal="request_completed" from="HTTPRequestPersonsRetrieve" to="." method="_on_HTTPRequestPersonsRetrieve_request_completed"]
+[connection signal="request_completed" from="HTTPRequestCatchPerson" to="." method="_on_HTTPRequestCatchPerson_request_completed"]
+[connection signal="request_completed" from="HTTPRequestGameCreate" to="." method="_on_HTTPRequestGameCreate_request_completed"]
