@@ -8,3 +8,5 @@ res://scenes/MainMenuScene.tscn
 res://scenes/InGame.gd
 res://scenes/CandidateLocationScene.tscn
 res://scenes/CandidateLocationScene.gd
+res://scenes/FacilityScene.tscn
+res://scenes/FacilityScene.gd

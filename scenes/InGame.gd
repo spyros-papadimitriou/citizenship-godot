@@ -11,8 +11,13 @@ const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 @onready var description = $GridContainer/VBoxContainerRight/Panel/Description
 
 @onready var popup_facilities = $PopupFacilities
+@onready var popup_facilites_panel = $PopupFacilities/Panel
+@onready var facilities_container = $PopupFacilities/Panel/VBoxContainer
+
 @onready var popup_candidate_locations = $PopupCandidateLocations
+@onready var popup_candidate_locations_panel = $PopupCandidateLocations/Panel
 @onready var candidate_locations_container = $PopupCandidateLocations/Panel/VBoxContainer
+
 @onready var popup_npc = $PopupNpc
 @onready var label_facility = $PopupNpc/LabelFacility
 @onready var label_npc = $PopupNpc/LabelNpc
@@ -47,7 +52,7 @@ func show_current_status(game_current_status: GameCurrentStatus):
 	var facilities = get_tree().get_nodes_in_group(FACILITIES_GROUP)
 	for f in facilities:
 		f.remove_from_group(FACILITIES_GROUP)
-		popup_facilities.remove_child(f)
+		facilities_container.remove_child(f)
 	var candidate_locations = get_tree().get_nodes_in_group(CANDIDATE_LOCATIONS_GROUP)
 	for cl in candidate_locations:
 		cl.remove_from_group(CANDIDATE_LOCATIONS_GROUP)
@@ -64,17 +69,17 @@ func show_current_status(game_current_status: GameCurrentStatus):
 		var facility_scene_instance = facility_scene.instantiate()
 		facility_scene_instance.add_to_group(FACILITIES_GROUP)
 		facility_scene_instance.position = Vector2(position_x, (i - 1) * (50 + 10) + 80)
-		popup_facilities.add_child(facility_scene_instance)
+		facilities_container.add_child(facility_scene_instance)
 		facility_scene_instance.set_facility(facility)
 		facility_scene_instance.connect("facility_selected", Callable(self, "select_facility"))
+	popup_facilites_panel.size = Vector2(300, (i + 2) * (50 + 10) + 20)
 	button_close_facilities = Button.new()
 	button_close_facilities.size = Vector2(200, 50)
 	button_close_facilities.text = "Κλείσιμο"
 	button_close_facilities.add_to_group(FACILITIES_GROUP)
-	button_close_facilities.position = Vector2(position_x, i * (50 + 10) + 80)
+	button_close_facilities.custom_minimum_size = Vector2(260, 50)
 	button_close_facilities.connect("pressed", Callable(self, "_on_Button_CloseFacilities_pressed"))
-	popup_facilities.add_child(button_close_facilities)
-	popup_facilities.size = Vector2(300, $PopupFacilities/LabelFacilities.size.y + i * (50 + 10) + 100)
+	facilities_container.add_child(button_close_facilities)
 
 	i = 0
 	for candidate_location in game_current_status.candidate_locations:
@@ -86,17 +91,18 @@ func show_current_status(game_current_status: GameCurrentStatus):
 		candidate_locations_container.add_child(candidate_location_scene_instance)
 		candidate_location_scene_instance.set_location(candidate_location)
 		candidate_location_scene_instance.connect("location_selected", Callable(self, "select_location"))
+	popup_candidate_locations_panel.size = Vector2(300, (i + 2) * (50 + 10) + 20)
 	button_close_candidate_locations = Button.new()
 	button_close_candidate_locations.text = "Κλείσιμο"
-	button_close_candidate_locations.size = Vector2(260, 50)
+	button_close_candidate_locations.custom_minimum_size= Vector2(260, 50)
 	button_close_candidate_locations.add_to_group(CANDIDATE_LOCATIONS_GROUP)
 	button_close_candidate_locations.connect("pressed", Callable(self, "_on_Button_CloseCandidateLocations_pressed"))
 	candidate_locations_container.add_child(button_close_candidate_locations)
-	popup_candidate_locations.size = Vector2(300, $PopupCandidateLocations/LabelCandidateLocations.size.y + i * (50 + 10) + 100)
 
 func _on_ButtonFacilities_pressed():
 	popup_candidate_locations.hide()
 	if popup_facilities.visible:
+		button_close_facilities.release_focus()
 		popup_facilities.hide()
 	else:
 		lightbox.visible = true
@@ -169,6 +175,7 @@ func _on_ButtonComputer_pressed():
 	get_tree().change_scene_to_file("res://scenes/SearchScene.tscn")
 
 func _on_popup_facilities_popup_hide() -> void:
+	button_facilities.release_focus()
 	if !popup_npc.visible:
 		close_lightbox()
 

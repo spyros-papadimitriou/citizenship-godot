@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 signal facility_selected(facility)
 
