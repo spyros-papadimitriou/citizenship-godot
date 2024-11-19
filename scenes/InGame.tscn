@@ -100,6 +100,7 @@ theme = ExtResource("4_2yveg")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 custom_minimum_size = Vector2(960, 50)
+layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 980.0
@@ -147,17 +148,32 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="PopupCandidateLocations" type="Popup" parent="."]
+transparent_bg = true
 initial_position = 1
-size = Vector2i(300, 100)
+size = Vector2i(350, 350)
 always_on_top = true
+transparent = true
+
+[node name="Panel" type="Panel" parent="PopupCandidateLocations"]
+custom_minimum_size = Vector2(300, 300)
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 350.0
+theme = ExtResource("4_2yveg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupCandidateLocations/Panel"]
+custom_minimum_size = Vector2(260, 260)
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 280.0
+offset_bottom = 280.0
+theme_override_constants/separation = 20
 
 [node name="LabelCandidateLocations" type="Label" parent="PopupCandidateLocations"]
-custom_minimum_size = Vector2(200, 50)
-offset_left = 50.0
-offset_top = 25.0
-offset_right = 250.0
-offset_bottom = 75.0
-theme_override_fonts/font = ExtResource("4")
+custom_minimum_size = Vector2(300, 50)
+offset_right = 300.0
+offset_bottom = 50.0
+theme = ExtResource("4_wb2ru")
 text = "Άλλες περιοχές"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -12,6 +12,7 @@ const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 
 @onready var popup_facilities = $PopupFacilities
 @onready var popup_candidate_locations = $PopupCandidateLocations
+@onready var candidate_locations_container = $PopupCandidateLocations/Panel/VBoxContainer
 @onready var popup_npc = $PopupNpc
 @onready var label_facility = $PopupNpc/LabelFacility
 @onready var label_npc = $PopupNpc/LabelNpc
@@ -50,7 +51,7 @@ func show_current_status(game_current_status: GameCurrentStatus):
 	var candidate_locations = get_tree().get_nodes_in_group(CANDIDATE_LOCATIONS_GROUP)
 	for cl in candidate_locations:
 		cl.remove_from_group(CANDIDATE_LOCATIONS_GROUP)
-		popup_candidate_locations.remove_child(cl)
+		candidate_locations_container.remove_child(cl)
 	
 	create_title_text()
 	description.text = game_current_status.current_location.description
@@ -81,17 +82,16 @@ func show_current_status(game_current_status: GameCurrentStatus):
 		
 		var candidate_location_scene_instance = candidate_location_scene.instantiate()
 		candidate_location_scene_instance.add_to_group(CANDIDATE_LOCATIONS_GROUP)
-		candidate_location_scene_instance.position = Vector2(position_x, (i - 1) * (50 + 10) + 80)
-		popup_candidate_locations.add_child(candidate_location_scene_instance)
+		#candidate_location_scene_instance.position = Vector2(position_x, (i - 1) * (50 + 10) + 80)
+		candidate_locations_container.add_child(candidate_location_scene_instance)
 		candidate_location_scene_instance.set_location(candidate_location)
 		candidate_location_scene_instance.connect("location_selected", Callable(self, "select_location"))
 	button_close_candidate_locations = Button.new()
-	button_close_candidate_locations.size = Vector2(200, 50)
 	button_close_candidate_locations.text = "Κλείσιμο"
+	button_close_candidate_locations.size = Vector2(260, 50)
 	button_close_candidate_locations.add_to_group(CANDIDATE_LOCATIONS_GROUP)
-	button_close_candidate_locations.position = Vector2(position_x, i * (50 + 10) + 80)
 	button_close_candidate_locations.connect("pressed", Callable(self, "_on_Button_CloseCandidateLocations_pressed"))
-	popup_candidate_locations.add_child(button_close_candidate_locations)
+	candidate_locations_container.add_child(button_close_candidate_locations)
 	popup_candidate_locations.size = Vector2(300, $PopupCandidateLocations/LabelCandidateLocations.size.y + i * (50 + 10) + 100)
 
 func _on_ButtonFacilities_pressed():
@@ -139,10 +139,12 @@ func _on_ButtonMainMenu_pressed():
 	get_tree().change_scene_to_file("res://scenes/MainMenuScene.tscn")
 
 func _on_Button_CloseCandidateLocations_pressed():
+	button_candidate_locations.release_focus()
 	popup_candidate_locations.hide()
 	close_lightbox()
 	
 func _on_Button_CloseFacilities_pressed():
+	button_facilities.release_focus()
 	popup_facilities.hide()
 	close_lightbox()
 
@@ -171,6 +173,7 @@ func _on_popup_facilities_popup_hide() -> void:
 		close_lightbox()
 
 func _on_popup_candidate_locations_popup_hide() -> void:
+	button_candidate_locations.release_focus()
 	close_lightbox()
 
 func _on_popup_npc_popup_hide() -> void:

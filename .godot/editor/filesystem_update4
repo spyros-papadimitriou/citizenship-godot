@@ -6,3 +6,5 @@ res://scenes/FailureScene.tscn
 res://scenes/InGame.tscn
 res://scenes/MainMenuScene.tscn
 res://scenes/InGame.gd
+res://scenes/CandidateLocationScene.tscn
+res://scenes/CandidateLocationScene.gd
