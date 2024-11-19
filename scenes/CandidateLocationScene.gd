@@ -2,9 +2,9 @@ extends Node2D
 
 signal location_selected(location)
 
-onready var button = $Button
+@onready var button = $Button
 
-var location: Location setget set_location
+var location: Location: set = set_location
 
 func _ready():
 	pass

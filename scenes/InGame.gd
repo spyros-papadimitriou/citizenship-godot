@@ -6,36 +6,42 @@ const candidate_location_scene = preload("res://scenes/CandidateLocationScene.ts
 const FACILITIES_GROUP = "facilities_group"
 const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 
-onready var communicator = $Communicator
-onready var title = $GridContainer/VBoxContainerLeft/Title
-onready var description = $GridContainer/VBoxContainerRight/Description
+@onready var communicator = $Communicator
+@onready var title = $GridContainer/VBoxContainerLeft/Title
+@onready var description = $GridContainer/VBoxContainerRight/Description
 
-onready var popup_facilities = $PopupFacilities
-onready var popup_candidate_locations = $PopupCandidateLocations
-onready var popup_npc = $PopupNpc
-onready var label_facility = $PopupNpc/LabelFacility
-onready var label_npc = $PopupNpc/LabelNpc
-onready var label_clue = $PopupNpc/LabelClue
+@onready var popup_facilities = $PopupFacilities
+@onready var popup_candidate_locations = $PopupCandidateLocations
+@onready var popup_npc = $PopupNpc
+@onready var label_facility = $PopupNpc/LabelFacility
+@onready var label_npc = $PopupNpc/LabelNpc
+@onready var label_clue = $PopupNpc/LabelClue
 
-onready var button_candidate_locations = $HBoxContainer/ButtonCandidateLocations
-onready var button_facilities = $HBoxContainer/ButtonFacilities
-onready var button_computer = $HBoxContainer/ButtonComputer
+@onready var button_candidate_locations = $HBoxContainer/ButtonCandidateLocations
+@onready var button_facilities = $HBoxContainer/ButtonFacilities
+@onready var button_computer = $HBoxContainer/ButtonComputer
 
-onready var label_left = $GridContainer/LabelLeft
-onready var label_right = $GridContainer/LabelRight
-onready var lightbox = $ColorRect
-onready var button_close = $ButtonClose
+@onready var label_left = $GridContainer/LabelLeft
+@onready var label_right = $GridContainer/LabelRight
+@onready var lightbox = $ColorRect
+
+var button_close_candidate_locations: Button
+var button_close_facilities: Button
+var button_close_npc: Button
 
 func _ready():
 	label_right.text = "Game #" + str(Globals.game_id)
 		
-	communicator.connect("game_current_status_retrieved", self, "show_current_status")
-	communicator.connect("went_to_facility", self, "update_current_facility")
+	communicator.connect("game_current_status_retrieved", Callable(self, "show_current_status"))
+	communicator.connect("went_to_facility", Callable(self, "update_current_facility"))
 	communicator.retrieve_game_current_status(Globals.game_id)
 	
 func show_current_status(game_current_status: GameCurrentStatus):
 	lightbox.visible = false
-	button_close.visible = false
+	
+	button_computer.disabled = !game_current_status.last
+	button_candidate_locations.disabled = !button_computer.disabled
+	button_facilities.disabled = !button_computer.disabled
 	
 	var facilities = get_tree().get_nodes_in_group(FACILITIES_GROUP)
 	for f in facilities:
@@ -47,98 +53,128 @@ func show_current_status(game_current_status: GameCurrentStatus):
 		popup_candidate_locations.remove_child(cl)
 	
 	create_title_text()
-
 	description.text = game_current_status.current_location.description
-	button_computer.disabled = !game_current_status.last
-	button_candidate_locations.disabled = !button_computer.disabled
-	button_facilities.disabled = !button_computer.disabled
 		
+	var position_x: float = popup_facilities.size.x / 2 - 100
 	var i: int = 0
 	for facility in game_current_status.facilities:
 		i = i + 1
 		
-		var facility_scene_instance = facility_scene.instance()
+		var facility_scene_instance = facility_scene.instantiate()
 		facility_scene_instance.add_to_group(FACILITIES_GROUP)
-		facility_scene_instance.position = Vector2(0, (i - 1) * (50 + 10) + 80)
+		facility_scene_instance.position = Vector2(position_x, (i - 1) * (50 + 10) + 80)
 		popup_facilities.add_child(facility_scene_instance)
 		facility_scene_instance.set_facility(facility)
-		facility_scene_instance.connect("facility_selected", self, "select_facility")
+		facility_scene_instance.connect("facility_selected", Callable(self, "select_facility"))
+	button_close_facilities = Button.new()
+	button_close_facilities.size = Vector2(200, 50)
+	button_close_facilities.text = "Κλείσιμο"
+	button_close_facilities.add_to_group(FACILITIES_GROUP)
+	button_close_facilities.position = Vector2(position_x, i * (50 + 10) + 80)
+	button_close_facilities.connect("pressed", Callable(self, "_on_Button_CloseFacilities_pressed"))
+	popup_facilities.add_child(button_close_facilities)
+	popup_facilities.size = Vector2(300, $PopupFacilities/LabelFacilities.size.y + i * (50 + 10) + 100)
 
 	i = 0
 	for candidate_location in game_current_status.candidate_locations:
 		i = i + 1
 		
-		var candidate_location_scene_instance = candidate_location_scene.instance()
+		var candidate_location_scene_instance = candidate_location_scene.instantiate()
 		candidate_location_scene_instance.add_to_group(CANDIDATE_LOCATIONS_GROUP)
-		candidate_location_scene_instance.position = Vector2(0, (i - 1) * (50 + 10) + 80)
+		candidate_location_scene_instance.position = Vector2(position_x, (i - 1) * (50 + 10) + 80)
 		popup_candidate_locations.add_child(candidate_location_scene_instance)
 		candidate_location_scene_instance.set_location(candidate_location)
-		candidate_location_scene_instance.connect("location_selected", self, "select_location")
+		candidate_location_scene_instance.connect("location_selected", Callable(self, "select_location"))
+	button_close_candidate_locations = Button.new()
+	button_close_candidate_locations.size = Vector2(200, 50)
+	button_close_candidate_locations.text = "Κλείσιμο"
+	button_close_candidate_locations.add_to_group(CANDIDATE_LOCATIONS_GROUP)
+	button_close_candidate_locations.position = Vector2(position_x, i * (50 + 10) + 80)
+	button_close_candidate_locations.connect("pressed", Callable(self, "_on_Button_CloseCandidateLocations_pressed"))
+	popup_candidate_locations.add_child(button_close_candidate_locations)
+	popup_candidate_locations.size = Vector2(300, $PopupCandidateLocations/LabelCandidateLocations.size.y + i * (50 + 10) + 100)
 
 func _on_ButtonFacilities_pressed():
 	popup_candidate_locations.hide()
 	if popup_facilities.visible:
-		button_close.visible = false
 		popup_facilities.hide()
 	else:
 		lightbox.visible = true
-		button_close.visible = true
-		button_close.rect_position = Vector2(popup_facilities.rect_position.x, popup_facilities.rect_position.y + 6 * 60)
 		popup_facilities.show()
 
 func _on_ButtonCandidateLocations_pressed():
-	popup_facilities.hide()
+	popup_candidate_locations.hide()
 	if popup_candidate_locations.visible:
 		popup_candidate_locations.hide()
 	else:
 		lightbox.visible = true
-		button_close.visible = true
-		button_close.rect_position = Vector2(popup_facilities.rect_position.x, popup_facilities.rect_position.y + 6 * 60)
 		popup_candidate_locations.show()
 
 func select_facility(facility: Facility):
 	communicator.go_to_facility(Globals.game_id, facility.id)
-	popup_facilities.hide()
-	
+		
 	label_facility.text = facility.name
 	label_npc.text = facility.npcName
 	label_clue.text = facility.clue
+	
+	button_close_npc = Button.new()
+	button_close_npc.size = Vector2(200, 50)
+	button_close_npc.text = "Κλείσιμο"
+	button_close_npc.connect("pressed", Callable(self, "_on_ButtonCloseNpc_pressed"))
+	button_close_npc.position = Vector2(popup_npc.size.x / 2 - 100, popup_npc.size.y - 50 - 20)
+	popup_npc.add_child(button_close_npc)
+	
 	popup_npc.show()
+	popup_facilities.hide()
 
 func select_location(location: Location):
 	communicator.go_to_location(Globals.game_id, location.id);
-	button_close.visible = false
 	popup_candidate_locations.hide()
 
 func _on_ButtonCloseNpc_pressed():
 	popup_npc.hide()
+	close_lightbox()
 
 func _on_ButtonMainMenu_pressed():
-	get_tree().change_scene("res://scenes/MainMenuScene.tscn")
+	get_tree().change_scene_to_file("res://scenes/MainMenuScene.tscn")
 
-func _on_ButtonClose_pressed():
-	lightbox.visible = false
-	button_close.visible = false
-	popup_facilities.hide()
+func _on_Button_CloseCandidateLocations_pressed():
 	popup_candidate_locations.hide()
-	popup_npc.hide()
+	close_lightbox()
+	
+func _on_Button_CloseFacilities_pressed():
+	popup_facilities.hide()
+	close_lightbox()
 
 func create_title_text():
 	var title_text: String = ""
-	title_text += "Τρεχουσα περιοχη: " + Globals.game_status.current_location.name
+	title_text += "Τρέχουσα περιοχή: " + Globals.game_status.current_location.name
 	if Globals.game_status.current_facility != null:
-		title_text += "\nΤρέχον μερος: " + Globals.game_status.current_facility.name
+		title_text += "\nΤρέχον μέρος: " + Globals.game_status.current_facility.name
 	
 	if Globals.game_status.lost:
-		title_text += "\n\nΦαίνεται οτι εχεις μεταβει σε αλλη περιοχη. Δεν υπαρχει κατι ύποπτο εδω."
+		title_text += "\n\n\nΦαίνεται οτι έχεις μεταβεί σε άλλη περιοχή από εκείνη όπου βρίσκεται ο ύποπτος. Δεν υπάρχει κάτι το αξιοσημείωτο εδώ για την αναζήτησή σου."
 	elif Globals.game_status.last:
-		title_text += "\n\nΟ ύποπτος βρίσκεται καπου εδω!\nΠατα στην 'Αναζητηση ατομων για να εκδωσει ο Δημαρχος επίσημο χαρτί για τον εντοπισμο του υποπτου και την ενσωματωση του σε ειδικο εκπαιδευτικο προγραμμα για βελτιωση της αστικής συνειδησης."	
+		title_text += "\n\nΟ ύποπτος βρίσκεται κάπου εδώ!\nΠάτα στην 'Αναζήτηση ατόμων' για να εκδώσει ο Δήμαρχος επίσημο χαρτί για τον εντοπισμόυ του υπόπτου και την ενσωμάτωσή του σε ειδικό εκπαιδευτικό πρόγραμμα για βελτίωση της αστικής του συνείδησης."
+		title_text += "\n\nΠροσοχή! Αν επιλέξεις λάθος άτομο, ο ύποπτος θα ξεφύγει και η αποστολή θα ακυρωθεί!";
 	title.text = title_text
 
 func update_current_facility(facility: Facility):
 	Globals.game_status.current_facility = facility
 	create_title_text()
 
-
 func _on_ButtonComputer_pressed():
-	get_tree().change_scene("res://scenes/SearchScene.tscn")
+	get_tree().change_scene_to_file("res://scenes/SearchScene.tscn")
+
+func _on_popup_facilities_popup_hide() -> void:
+	if !popup_npc.visible:
+		close_lightbox()
+
+func _on_popup_candidate_locations_popup_hide() -> void:
+	close_lightbox()
+
+func _on_popup_npc_popup_hide() -> void:
+	close_lightbox()
+	
+func close_lightbox():
+	lightbox.visible = false;

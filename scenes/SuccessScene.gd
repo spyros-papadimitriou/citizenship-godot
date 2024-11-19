@@ -1,7 +1,6 @@
 extends Node2D
 
+signal feedback_success_closed
 
-
-func _on_Button_pressed():
-	Globals.game_id = 0
-	get_tree().change_scene("res://scenes/MainMenuScene.tscn")
+func _on_button_pressed() -> void:
+	emit_signal("feedback_success_closed")

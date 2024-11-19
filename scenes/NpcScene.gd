@@ -1,9 +1,9 @@
 extends Node2D
 
-onready var label_npc = $LabelNpc
-onready var label_clue = $LabelClue
+@onready var label_npc = $LabelNpc
+@onready var label_clue = $LabelClue
 
-var npc: Npc setget set_npc
+var npc: Npc: set = set_npc
 	
 func set_npc(_npc):
 	npc = _npc

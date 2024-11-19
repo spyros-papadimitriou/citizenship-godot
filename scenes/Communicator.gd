@@ -62,7 +62,9 @@ func catch_person(game_id: int, person_id: int):
 		print("Error trying to catch the person")
 
 func _on_HTTPRequestGameRetrieve_request_completed(result, response_code, headers, body):
-	var json:JSONParseResult = JSON.parse(body.get_string_from_utf8())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(body.get_string_from_utf8())
+	var json:JSON = test_json_conv.get_data()
 	
 	var mission: Mission = Mission.new()
 	mission.id = json.result.id
@@ -73,29 +75,31 @@ func _on_HTTPRequestGameRetrieve_request_completed(result, response_code, header
 
 
 func _on_HTTPRequestGameCurrentStatus_request_completed(result, response_code, headers, body):
-	var json:JSONParseResult = JSON.parse(body.get_string_from_utf8())
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
 	
 	var game_current_status: GameCurrentStatus = GameCurrentStatus.new()
 	
 	var mission = Mission.new()
-	mission.id = json.result.mission.id
-	mission.title = json.result.mission.title
-	mission.description = json.result.mission.description
+	mission.id = response.mission.id
+	mission.title = response.mission.title
+	mission.description = response.mission.description
 	game_current_status.mission = mission
 	
 	var current_location: Location = Location.new()
-	current_location.id = json.result.currentLocation.id
-	current_location.name = json.result.currentLocation.name
-	current_location.description = json.result.currentLocation.description
+	current_location.id = response.currentLocation.id
+	current_location.name = response.currentLocation.name
+	current_location.description = response.currentLocation.description
 	game_current_status.current_location = current_location
 	
-	if json.result.currentFacility != null:
+	if response.currentFacility != null:
 		var current_facility: Facility = Facility.new()
-		current_facility.id = json.result.currentFacility.id
-		current_facility.name = json.result.currentFacility.name
+		current_facility.id = response.currentFacility.id
+		current_facility.name = response.currentFacility.name
 		game_current_status.current_facility = current_facility
 		
-	for f in json.result.facilities:
+	for f in response.facilities:
 		var facility: Facility = Facility.new()
 		facility.id = f.id
 		facility.name = f.name
@@ -104,24 +108,26 @@ func _on_HTTPRequestGameCurrentStatus_request_completed(result, response_code, h
 		facility.npcName = f.npc.name
 		game_current_status.facilities.append(facility)
 		
-	for l in json.result.candidateLocations:
+	for l in response.candidateLocations:
 		var candidate_location: Location = Location.new()
 		candidate_location.id = l.id
 		candidate_location.name = l.name
 		game_current_status.candidate_locations.append(candidate_location)
 	
-	game_current_status.last = json.result.last
-	game_current_status.lost = json.result.lost
+	game_current_status.last = response.last
+	game_current_status.lost = response.lost
 	
 	Globals.game_status = game_current_status
 	emit_signal("game_current_status_retrieved", game_current_status)
 
 
 func _on_HTTPRequestGoToFacility_request_completed(result, response_code, headers, body):
-	var json:JSONParseResult = JSON.parse(body.get_string_from_utf8())
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
 	var facility: Facility = Facility.new()
-	facility.id = json.result.facility.id
-	facility.name = json.result.facility.name
+	facility.id = response.facility.id
+	facility.name = response.facility.name
 	emit_signal("went_to_facility", facility)
 	
 
@@ -131,10 +137,12 @@ func _on_HTTPRequestGoToLocation_request_completed(result, response_code, header
 
 
 func _on_HTTPRequestFeaturesRetrieve_request_completed(result, response_code, headers, body):
-	var json:JSONParseResult = JSON.parse(body.get_string_from_utf8())
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
 	
 	var features: Array = []
-	for f in json.result.features:
+	for f in response.features:
 		var feature: Feature = Feature.new()
 		feature.id = f.id
 		feature.name = f.name
@@ -149,10 +157,12 @@ func _on_HTTPRequestFeaturesRetrieve_request_completed(result, response_code, he
 
 
 func _on_HTTPRequestPersonsRetrieve_request_completed(result, response_code, headers, body):
-	var json:JSONParseResult = JSON.parse(body.get_string_from_utf8())
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
 	
 	var persons: Array = []
-	for p in json.result.persons:
+	for p in response.persons:
 		var person: Person = Person.new()
 		person.id = p.id
 		person.given_name = p.givenName
@@ -170,14 +180,19 @@ func _on_HTTPRequestPersonsRetrieve_request_completed(result, response_code, hea
 
 
 func _on_HTTPRequestCatchPerson_request_completed(result, response_code, headers, body):
-	var json:JSONParseResult = JSON.parse(body.get_string_from_utf8())
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
+	
 	var feedback: Feedback = Feedback.new()
-	feedback.success = json.result.success
-	feedback.message = json.result.message
+	feedback.success = response.success
+	feedback.message = response.message
 	emit_signal("person_caught", feedback)
 
 
 func _on_HTTPRequestGameCreate_request_completed(result, response_code, headers, body):
-	var json:JSONParseResult = JSON.parse(body.get_string_from_utf8())
-	var game_id: int = json.result.id	
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var response = json.get_data()
+	var game_id: int = response.id	
 	emit_signal("game_created", game_id)

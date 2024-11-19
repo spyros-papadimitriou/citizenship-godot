@@ -2,10 +2,10 @@ extends Node2D
 
 signal person_selected(location)
 
-onready var label = $GridContainer/Label
-onready var button = $GridContainer/Button
+@onready var label = $GridContainer/Label
+@onready var button = $GridContainer/Button
 
-var person: Person setget set_person
+var person: Person: set = set_person
 
 func _ready():
 	pass

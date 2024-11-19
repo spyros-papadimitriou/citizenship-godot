@@ -2,9 +2,9 @@ extends Node2D
 
 signal facility_selected(facility)
 
-onready var button = $Button
+@onready var button = $Button
 
-var facility: Facility setget set_facility
+var facility: Facility: set = set_facility
 
 func _ready():
 	pass
