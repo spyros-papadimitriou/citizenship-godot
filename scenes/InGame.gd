@@ -72,7 +72,8 @@ func show_current_status(game_current_status: GameCurrentStatus):
 		facilities_container.add_child(facility_scene_instance)
 		facility_scene_instance.set_facility(facility)
 		facility_scene_instance.connect("facility_selected", Callable(self, "select_facility"))
-	popup_facilites_panel.size = Vector2(300, (i + 2) * (50 + 10) + 20)
+	popup_facilites_panel.size = Vector2(300, (i + 2) * (50 + 10))
+	popup_facilities.size.y = popup_facilites_panel.size.y + 50
 	button_close_facilities = Button.new()
 	button_close_facilities.size = Vector2(200, 50)
 	button_close_facilities.text = "Κλείσιμο"
@@ -91,7 +92,8 @@ func show_current_status(game_current_status: GameCurrentStatus):
 		candidate_locations_container.add_child(candidate_location_scene_instance)
 		candidate_location_scene_instance.set_location(candidate_location)
 		candidate_location_scene_instance.connect("location_selected", Callable(self, "select_location"))
-	popup_candidate_locations_panel.size = Vector2(300, (i + 2) * (50 + 10) + 20)
+	popup_candidate_locations_panel.size = Vector2(300, (i + 2) * (50 + 10))
+	popup_candidate_locations.size.y = popup_candidate_locations_panel.size.y + 50
 	button_close_candidate_locations = Button.new()
 	button_close_candidate_locations.text = "Κλείσιμο"
 	button_close_candidate_locations.custom_minimum_size= Vector2(260, 50)

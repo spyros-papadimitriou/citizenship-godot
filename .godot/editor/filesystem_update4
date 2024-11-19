@@ -10,3 +10,4 @@ res://scenes/CandidateLocationScene.tscn
 res://scenes/CandidateLocationScene.gd
 res://scenes/FacilityScene.tscn
 res://scenes/FacilityScene.gd
+res://scenes/PersonScene.tscn

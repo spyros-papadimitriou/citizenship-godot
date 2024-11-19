@@ -131,9 +131,11 @@ layout_mode = 2
 text = "Επιστροφή"
 
 [node name="PopupFacilities" type="Popup" parent="."]
+transparent_bg = true
 position = Vector2i(325, 125)
-size = Vector2i(350, 350)
+size = Vector2i(350, 100)
 always_on_top = true
+transparent = true
 
 [node name="Panel" type="Panel" parent="PopupFacilities"]
 custom_minimum_size = Vector2(350, 50)
