@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var communicator = $Communicator
-@onready var button_continue = $VBoxContainer/ButtonContinue
+@onready var button_continue = $Panel/VBoxContainer/ButtonContinue
 
 func _ready():
 	button_continue.disabled = Globals.game_id <= 0	

@@ -7,8 +7,8 @@ const FACILITIES_GROUP = "facilities_group"
 const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 
 @onready var communicator = $Communicator
-@onready var title = $GridContainer/VBoxContainerLeft/Title
-@onready var description = $GridContainer/VBoxContainerRight/Description
+@onready var title = $GridContainer/VBoxContainerLeft/Panel/Title
+@onready var description = $GridContainer/VBoxContainerRight/Panel/Description
 
 @onready var popup_facilities = $PopupFacilities
 @onready var popup_candidate_locations = $PopupCandidateLocations
@@ -17,12 +17,12 @@ const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 @onready var label_npc = $PopupNpc/LabelNpc
 @onready var label_clue = $PopupNpc/LabelClue
 
-@onready var button_candidate_locations = $HBoxContainer/ButtonCandidateLocations
-@onready var button_facilities = $HBoxContainer/ButtonFacilities
-@onready var button_computer = $HBoxContainer/ButtonComputer
+@onready var button_candidate_locations = $Panel/HBoxContainer/ButtonCandidateLocations
+@onready var button_facilities = $Panel/HBoxContainer/ButtonFacilities
+@onready var button_computer = $Panel/HBoxContainer/ButtonComputer
 
-@onready var label_left = $GridContainer/LabelLeft
-@onready var label_right = $GridContainer/LabelRight
+@onready var label_left = $LabelLeft
+@onready var label_right = $LabelRight
 @onready var lightbox = $ColorRect
 
 var button_close_candidate_locations: Button
@@ -155,7 +155,7 @@ func create_title_text():
 	if Globals.game_status.lost:
 		title_text += "\n\n\nΦαίνεται οτι έχεις μεταβεί σε άλλη περιοχή από εκείνη όπου βρίσκεται ο ύποπτος. Δεν υπάρχει κάτι το αξιοσημείωτο εδώ για την αναζήτησή σου."
 	elif Globals.game_status.last:
-		title_text += "\n\nΟ ύποπτος βρίσκεται κάπου εδώ!\nΠάτα στην 'Αναζήτηση ατόμων' για να εκδώσει ο Δήμαρχος επίσημο χαρτί για τον εντοπισμόυ του υπόπτου και την ενσωμάτωσή του σε ειδικό εκπαιδευτικό πρόγραμμα για βελτίωση της αστικής του συνείδησης."
+		title_text += "\n\nΟ ύποπτος βρίσκεται κάπου εδώ!\nΠάτα στην 'Αναζήτηση ατόμων' για να εκδώσει ο Δήμαρχος επίσημο χαρτί για τον εντοπισμό του υπόπτου και την ενσωμάτωσή του σε ειδικό εκπαιδευτικό πρόγραμμα για βελτίωση της αστικής του συνείδησης."
 		title_text += "\n\nΠροσοχή! Αν επιλέξεις λάθος άτομο, ο ύποπτος θα ξεφύγει και η αποστολή θα ακυρωθεί!";
 	title.text = title_text
 
