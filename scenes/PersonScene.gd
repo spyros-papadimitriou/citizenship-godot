@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 signal person_selected(location)
 
@@ -13,7 +13,7 @@ func _ready():
 func set_person(_person):
 	person = _person
 	if person != null:
-		label.text = person.given_name + " " + person.family_name
+		label.text = person.given_name + "\n" + person.family_name
 
 
 func _on_Button_pressed():

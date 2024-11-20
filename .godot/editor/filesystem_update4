@@ -5,9 +5,13 @@ res://scenes/SuccessScene.tscn
 res://scenes/FailureScene.tscn
 res://scenes/InGame.tscn
 res://scenes/MainMenuScene.tscn
-res://scenes/InGame.gd
 res://scenes/CandidateLocationScene.tscn
-res://scenes/CandidateLocationScene.gd
 res://scenes/FacilityScene.tscn
-res://scenes/FacilityScene.gd
 res://scenes/PersonScene.tscn
+res://scenes/PersonScene.gd
+res://scenes/SearchScene.gd
+res://scenes/MainMenuScene.gd
+res://scenes/InGame.gd
+res://scenes/Communicator.tscn
+res://scenes/Communicator.gd
+res://themes/RedHeadingTheme.tres

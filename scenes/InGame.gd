@@ -19,27 +19,22 @@ const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 @onready var candidate_locations_container = $PopupCandidateLocations/Panel/VBoxContainer
 
 @onready var popup_npc = $PopupNpc
-@onready var label_facility = $PopupNpc/LabelFacility
-@onready var label_npc = $PopupNpc/LabelNpc
-@onready var label_clue = $PopupNpc/LabelClue
+@onready var popup_npc_container = $PopupNpc/Panel/VBoxContainer
+@onready var label_facility = $PopupNpc/Panel/LabelFacility
+@onready var label_npc = $PopupNpc/Panel/VBoxContainer/LabelNpc
+@onready var label_clue = $PopupNpc/Panel/VBoxContainer/LabelClue
 
 @onready var button_candidate_locations = $Panel/HBoxContainer/ButtonCandidateLocations
 @onready var button_facilities = $Panel/HBoxContainer/ButtonFacilities
 @onready var button_computer = $Panel/HBoxContainer/ButtonComputer
 
-@onready var label_left = $LabelLeft
-@onready var label_right = $LabelRight
 @onready var lightbox = $ColorRect
+@onready var button_close_npc = $PopupNpc/Panel/ButtonCloseNpc
 
 var button_close_candidate_locations: Button
 var button_close_facilities: Button
-var button_close_npc: Button
 
-func _ready():
-	label_right.text = "Game #" + str(Globals.game_id)
-		
-	communicator.connect("game_current_status_retrieved", Callable(self, "show_current_status"))
-	communicator.connect("went_to_facility", Callable(self, "update_current_facility"))
+func _ready():	
 	communicator.retrieve_game_current_status(Globals.game_id)
 	
 func show_current_status(game_current_status: GameCurrentStatus):
@@ -119,29 +114,17 @@ func _on_ButtonCandidateLocations_pressed():
 		popup_candidate_locations.show()
 
 func select_facility(facility: Facility):
-	communicator.go_to_facility(Globals.game_id, facility.id)
-		
+	popup_facilities.hide()
+	
 	label_facility.text = facility.name
 	label_npc.text = facility.npcName
 	label_clue.text = facility.clue
 	
-	button_close_npc = Button.new()
-	button_close_npc.size = Vector2(200, 50)
-	button_close_npc.text = "Κλείσιμο"
-	button_close_npc.connect("pressed", Callable(self, "_on_ButtonCloseNpc_pressed"))
-	button_close_npc.position = Vector2(popup_npc.size.x / 2 - 100, popup_npc.size.y - 50 - 20)
-	popup_npc.add_child(button_close_npc)
-	
-	popup_npc.show()
-	popup_facilities.hide()
+	communicator.go_to_facility(Globals.game_id, facility.id)
 
 func select_location(location: Location):
 	communicator.go_to_location(Globals.game_id, location.id);
 	popup_candidate_locations.hide()
-
-func _on_ButtonCloseNpc_pressed():
-	popup_npc.hide()
-	close_lightbox()
 
 func _on_ButtonMainMenu_pressed():
 	get_tree().change_scene_to_file("res://scenes/MainMenuScene.tscn")
@@ -157,13 +140,13 @@ func _on_Button_CloseFacilities_pressed():
 	close_lightbox()
 
 func create_title_text():
-	var title_text: String = ""
-	title_text += "Τρέχουσα περιοχή: " + Globals.game_status.current_location.name
+	var title_text: String = "Παιχνίδι #" + str(Globals.game_id)
+	title_text += "\nΤρέχουσα περιοχή: " + Globals.game_status.current_location.name
 	if Globals.game_status.current_facility != null:
 		title_text += "\nΤρέχον μέρος: " + Globals.game_status.current_facility.name
 	
 	if Globals.game_status.lost:
-		title_text += "\n\n\nΦαίνεται οτι έχεις μεταβεί σε άλλη περιοχή από εκείνη όπου βρίσκεται ο ύποπτος. Δεν υπάρχει κάτι το αξιοσημείωτο εδώ για την αναζήτησή σου."
+		title_text += "\n\nΦαίνεται οτι έχεις μεταβεί σε άλλη περιοχή από εκείνη όπου βρίσκεται ο ύποπτος. Δεν υπάρχει κάτι το αξιοσημείωτο εδώ για την αναζήτησή σου."
 	elif Globals.game_status.last:
 		title_text += "\n\nΟ ύποπτος βρίσκεται κάπου εδώ!\nΠάτα στην 'Αναζήτηση ατόμων' για να εκδώσει ο Δήμαρχος επίσημο χαρτί για τον εντοπισμό του υπόπτου και την ενσωμάτωσή του σε ειδικό εκπαιδευτικό πρόγραμμα για βελτίωση της αστικής του συνείδησης."
 		title_text += "\n\nΠροσοχή! Αν επιλέξεις λάθος άτομο, ο ύποπτος θα ξεφύγει και η αποστολή θα ακυρωθεί!";
@@ -171,6 +154,8 @@ func create_title_text():
 
 func update_current_facility(facility: Facility):
 	Globals.game_status.current_facility = facility
+	lightbox.visible = true
+	popup_npc.show()
 	create_title_text()
 
 func _on_ButtonComputer_pressed():
@@ -190,3 +175,8 @@ func _on_popup_npc_popup_hide() -> void:
 	
 func close_lightbox():
 	lightbox.visible = false;
+
+
+func _on_button_close_npc_pressed() -> void:
+	popup_npc.hide()
+	close_lightbox()

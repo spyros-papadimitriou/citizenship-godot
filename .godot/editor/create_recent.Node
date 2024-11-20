@@ -1,6 +1,10 @@
-Control
+Button
+Label
 VBoxContainer
 Panel
-Label
+ColorRect
+Sprite2D
+GridContainer
+Control
 PanelContainer
 Popup
