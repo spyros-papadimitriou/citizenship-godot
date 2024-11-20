@@ -37,4 +37,4 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.2, 0.6, 0.854902, 1)
+environment/defaults/default_clear_color=Color(0.966218, 0.768314, 0.620876, 1)

@@ -1,7 +1,8 @@
+TextureRect
+Panel
 Button
 Label
 VBoxContainer
-Panel
 ColorRect
 Sprite2D
 GridContainer

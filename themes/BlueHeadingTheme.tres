@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://vsl54agmlik6"]
+
+[ext_resource type="FontFile" uid="uid://bn3phaemlcj3e" path="res://assets/fonts/DelaGothicOne-Regular.ttf" id="1_hs2b7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cro4"]
+bg_color = Color(0.109804, 0.623529, 0.843137, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0862745, 0.490196, 0.658824, 1)
+border_blend = true
+
+[resource]
+Label/fonts/font = ExtResource("1_hs2b7")
+Label/styles/normal = SubResource("StyleBoxFlat_0cro4")

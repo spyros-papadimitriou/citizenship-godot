@@ -33,7 +33,7 @@ func show_person_info(person: Person):
 	selected_person = person
 	
 	var info: String = ""
-	info += "Ονοματεπωνυμο: " + person.given_name + " " + person.family_name
+	info += "Ονοματεπώνυμο: " + person.given_name + " " + person.family_name
 	info += " (id: " + str(person.id) + ")"
 	info += "\n"
 	for feature in person.features:

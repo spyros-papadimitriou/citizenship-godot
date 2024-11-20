@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dibb6dq3icscm"]
+[gd_scene load_steps=2 format=3 uid="uid://dibb6dq3icscm"]
 
 [ext_resource type="Script" path="res://scenes/FacilityScene.gd" id="1"]
-[ext_resource type="Theme" uid="uid://cd8yqy8uogmvo" path="res://themes/RedTheme.tres" id="2_tv5gs"]
 
 [node name="FacilityScene" type="Control"]
 custom_minimum_size = Vector2(310, 50)
@@ -14,6 +13,5 @@ custom_minimum_size = Vector2(310, 50)
 layout_mode = 0
 offset_right = 12.0
 offset_bottom = 20.0
-theme = ExtResource("2_tv5gs")
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

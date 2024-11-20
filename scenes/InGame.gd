@@ -7,8 +7,8 @@ const FACILITIES_GROUP = "facilities_group"
 const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 
 @onready var communicator = $Communicator
-@onready var title = $GridContainer/VBoxContainerLeft/Panel/Title
-@onready var description = $GridContainer/VBoxContainerRight/Panel/Description
+@onready var title = $GridContainer/PanelLeft/VBoxContainerLeft/Title
+@onready var description = $GridContainer/PanelRight/VBoxContainerRight/Description
 
 @onready var popup_facilities = $PopupFacilities
 @onready var popup_facilites_panel = $PopupFacilities/Panel

@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bf8seevqu8v5m"]
+[gd_scene load_steps=10 format=3 uid="uid://bf8seevqu8v5m"]
 
 [ext_resource type="Script" path="res://scenes/SearchScene.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cvx38gq024i88" path="res://scenes/Communicator.tscn" id="2"]
+[ext_resource type="Theme" uid="uid://cwuqa1h6eutsp" path="res://themes/BlueTheme.tres" id="4_kcb3u"]
 [ext_resource type="PackedScene" uid="uid://yq5nlxffhsj6" path="res://scenes/SuccessScene.tscn" id="5_02p6d"]
+[ext_resource type="Theme" uid="uid://vsl54agmlik6" path="res://themes/BlueHeadingTheme.tres" id="5_8bjk6"]
+[ext_resource type="Theme" uid="uid://dm1y10m6xfekv" path="res://themes/GreyTheme.tres" id="5_40d8o"]
 [ext_resource type="PackedScene" uid="uid://bfpexmga5k1o2" path="res://scenes/FailureScene.tscn" id="6_nqfny"]
 [ext_resource type="Theme" uid="uid://cd8yqy8uogmvo" path="res://themes/RedTheme.tres" id="6_undee"]
 [ext_resource type="Theme" uid="uid://ctq6b326o0feu" path="res://themes/RedHeadingTheme.tres" id="7_nems5"]
@@ -15,7 +18,7 @@ custom_minimum_size = Vector2(960, 0)
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 980.0
-offset_bottom = 510.0
+offset_bottom = 470.0
 theme_override_constants/h_separation = 20
 columns = 2
 
@@ -30,6 +33,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 theme = ExtResource("7_nems5")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Λίστα ατόμων"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -46,14 +50,15 @@ theme_override_constants/separation = 20
 [node name="PanelRight" type="Panel" parent="GridContainer"]
 custom_minimum_size = Vector2(470, 0)
 layout_mode = 2
-theme = ExtResource("6_undee")
+theme = ExtResource("4_kcb3u")
 
 [node name="TitleRight" type="Label" parent="GridContainer/PanelRight"]
 custom_minimum_size = Vector2(470, 50)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-theme = ExtResource("7_nems5")
+theme = ExtResource("5_8bjk6")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Πληροφορίες ατόμου"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -78,7 +83,7 @@ offset_left = 20.0
 offset_top = 490.0
 offset_right = 980.0
 offset_bottom = 580.0
-theme = ExtResource("6_undee")
+theme = ExtResource("5_40d8o")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelBottomMenu"]
 custom_minimum_size = Vector2(960, 50)
@@ -92,7 +97,6 @@ alignment = 1
 [node name="ButtonCatch" type="Button" parent="PanelBottomMenu/HBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-theme = ExtResource("6_undee")
 disabled = true
 text = "Έκδοση απόφασης"
 

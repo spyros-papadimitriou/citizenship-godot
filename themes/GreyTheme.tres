@@ -1,14 +1,14 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cd8yqy8uogmvo"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://dm1y10m6xfekv"]
 
-[ext_resource type="FontFile" uid="uid://bn3phaemlcj3e" path="res://assets/fonts/DelaGothicOne-Regular.ttf" id="1_k7jji"]
+[ext_resource type="FontFile" uid="uid://bn3phaemlcj3e" path="res://assets/fonts/DelaGothicOne-Regular.ttf" id="1_eta8d"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4ck6"]
-bg_color = Color(0.933333, 0.152941, 0.278431, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a42fq"]
+bg_color = Color(0.109804, 0.623529, 0.843137, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 4
-border_color = Color(0.842636, 0.112382, 0.240544, 1)
+border_color = Color(0.0862745, 0.490196, 0.658824, 1)
 border_blend = true
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -17,13 +17,13 @@ corner_radius_bottom_left = 2
 shadow_size = 1
 shadow_offset = Vector2(0, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_md6yb"]
-bg_color = Color(0.933333, 0.152941, 0.278431, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crwi4"]
+bg_color = Color(0.109804, 0.623529, 0.843137, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 4
-border_color = Color(0.842636, 0.112382, 0.240544, 1)
+border_color = Color(0.0862745, 0.490196, 0.658824, 1)
 border_blend = true
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -47,13 +47,13 @@ corner_radius_bottom_left = 2
 shadow_size = 1
 shadow_offset = Vector2(0, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2teb"]
-bg_color = Color(0.933333, 0.152941, 0.278431, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dftgn"]
+bg_color = Color(0.109804, 0.623529, 0.843137, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 4
-border_color = Color(0.842636, 0.112382, 0.240544, 1)
+border_color = Color(0.0862745, 0.490196, 0.658824, 1)
 border_blend = true
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -62,13 +62,13 @@ corner_radius_bottom_left = 2
 shadow_size = 1
 shadow_offset = Vector2(0, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2fbv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_die6g"]
 bg_color = Color(0.854902, 0.862745, 0.905882, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color(0.960784, 0.254902, 0.368627, 1)
+border_color = Color(0.596078, 0.603922, 0.686275, 1)
 border_blend = true
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -76,17 +76,17 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
 [resource]
-default_font = ExtResource("1_k7jji")
+default_font = ExtResource("1_eta8d")
 default_font_size = 14
 Button/colors/font_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
 Button/colors/font_focus_color = Color(0.0235294, 0.0235294, 0.0235294, 1)
 Button/colors/font_pressed_color = Color(0.0562916, 0.0562916, 0.0562916, 1)
-Button/fonts/font = ExtResource("1_k7jji")
-Button/styles/focus = SubResource("StyleBoxFlat_f4ck6")
-Button/styles/hover = SubResource("StyleBoxFlat_md6yb")
+Button/fonts/font = ExtResource("1_eta8d")
+Button/styles/focus = SubResource("StyleBoxFlat_a42fq")
+Button/styles/hover = SubResource("StyleBoxFlat_crwi4")
 Button/styles/normal = SubResource("StyleBoxFlat_ol8l2")
-Button/styles/pressed = SubResource("StyleBoxFlat_p2teb")
-Label/colors/font_color = Color(0.0177324, 0.0177324, 0.0177324, 1)
+Button/styles/pressed = SubResource("StyleBoxFlat_dftgn")
+Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 14
-Label/fonts/font = ExtResource("1_k7jji")
-Panel/styles/panel = SubResource("StyleBoxFlat_y2fbv")
+Label/fonts/font = ExtResource("1_eta8d")
+Panel/styles/panel = SubResource("StyleBoxFlat_die6g")

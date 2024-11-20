@@ -15,3 +15,6 @@ res://scenes/InGame.gd
 res://scenes/Communicator.tscn
 res://scenes/Communicator.gd
 res://themes/RedHeadingTheme.tres
+res://themes/BlueTheme.tres
+res://themes/BlueHeadingTheme.tres
+res://themes/GreyTheme.tres
