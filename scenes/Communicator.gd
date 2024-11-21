@@ -15,7 +15,8 @@ signal person_caught(feedback)
 @onready var error_panel = $ErrorPanel
 
 var loading: bool: set = set_loading
-var base_url = "http://localhost:8080/"
+#var base_url = "http://localhost:8080/"
+var base_url = "http://vmi388431.contaboserver.net:9999/citizenship/"
 
 func _ready() -> void:
 	hide_error()
