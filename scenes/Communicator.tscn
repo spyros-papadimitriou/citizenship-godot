@@ -39,9 +39,9 @@ texture = ExtResource("2_yrnva")
 [node name="ErrorPanel" type="Panel" parent="."]
 visible = false
 custom_minimum_size = Vector2(500, 300)
-offset_left = 350.0
+offset_left = 250.0
 offset_top = 150.0
-offset_right = 650.0
+offset_right = 750.0
 offset_bottom = 450.0
 theme = ExtResource("4_hodho")
 
@@ -69,9 +69,9 @@ text = "Επιστροφή στην αρχική σελίδα"
 [node name="ErrorTitle" type="Label" parent="."]
 visible = false
 custom_minimum_size = Vector2(500, 50)
-offset_left = 350.0
+offset_left = 250.0
 offset_top = 150.0
-offset_right = 650.0
+offset_right = 750.0
 offset_bottom = 200.0
 theme = ExtResource("3_3sgoi")
 text = "Σφάλμα Δικτύου"

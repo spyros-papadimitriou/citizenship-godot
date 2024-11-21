@@ -98,27 +98,36 @@ offset_bottom = 70.0
 theme_override_constants/separation = 20
 alignment = 1
 
+[node name="ButtonMission" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Πληροφορίες αποστολής"
+
 [node name="ButtonCandidateLocations" type="Button" parent="Panel/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 disabled = true
 text = "Αναζήτηση σε άλλη περιοχή"
 
 [node name="ButtonFacilities" type="Button" parent="Panel/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 disabled = true
 text = "Τι υπάρχει στην περιοχή"
 
 [node name="ButtonComputer" type="Button" parent="Panel/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 disabled = true
 text = "Αναζήτηση ατόμων"
 
 [node name="ButtonMainMenu" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_2yveg")
+theme_override_font_sizes/font_size = 12
 text = "Επιστροφή"
 
 [node name="PopupFacilities" type="Popup" parent="."]
@@ -188,17 +197,17 @@ vertical_alignment = 1
 
 [node name="PopupNpc" type="Popup" parent="."]
 initial_position = 1
-size = Vector2i(300, 300)
+size = Vector2i(500, 300)
 exclusive = true
 
 [node name="Panel" type="Panel" parent="PopupNpc"]
-custom_minimum_size = Vector2(300, 300)
+custom_minimum_size = Vector2(500, 300)
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("4_2yveg")
 
 [node name="LabelFacility" type="Label" parent="PopupNpc/Panel"]
-custom_minimum_size = Vector2(300, 50)
+custom_minimum_size = Vector2(500, 50)
 layout_mode = 2
 offset_right = 300.0
 offset_bottom = 50.0
@@ -207,7 +216,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PopupNpc/Panel"]
-custom_minimum_size = Vector2(260, 0)
+custom_minimum_size = Vector2(460, 0)
 layout_mode = 0
 offset_left = 20.0
 offset_top = 70.0
@@ -220,6 +229,9 @@ custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 autowrap_mode = 2
 
+[node name="HSeparator" type="HSeparator" parent="PopupNpc/Panel/VBoxContainer"]
+layout_mode = 2
+
 [node name="LabelClue" type="Label" parent="PopupNpc/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
@@ -228,10 +240,60 @@ autowrap_mode = 2
 [node name="ButtonCloseNpc" type="Button" parent="PopupNpc/Panel"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-offset_left = 20.0
+offset_left = 120.0
 offset_top = 230.0
-offset_right = 280.0
+offset_right = 380.0
 offset_bottom = 280.0
+text = "Κλείσιμο"
+
+[node name="PopupMission" type="Popup" parent="."]
+initial_position = 1
+size = Vector2i(500, 400)
+
+[node name="Panel" type="Panel" parent="PopupMission"]
+custom_minimum_size = Vector2(500, 400)
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("5_jqqbx")
+
+[node name="Titlebar" type="Label" parent="PopupMission/Panel"]
+custom_minimum_size = Vector2(500, 50)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_ihqdg")
+text = "Πληροφορίες αποστολής"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupMission/Panel"]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 0
+offset_left = 20.0
+offset_top = 70.0
+offset_right = 480.0
+offset_bottom = 118.0
+
+[node name="Title" type="Label" parent="PopupMission/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="PopupMission/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="PopupMission/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="ButtonCloseMission" type="Button" parent="PopupMission/Panel"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 0
+offset_left = 175.0
+offset_top = 330.0
+offset_right = 325.0
+offset_bottom = 380.0
 text = "Κλείσιμο"
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -243,6 +305,7 @@ color = Color(0, 0, 0, 0.392157)
 
 [node name="Communicator" parent="." instance=ExtResource("2")]
 
+[connection signal="pressed" from="Panel/HBoxContainer/ButtonMission" to="." method="_on_button_mission_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/ButtonCandidateLocations" to="." method="_on_ButtonCandidateLocations_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/ButtonFacilities" to="." method="_on_ButtonFacilities_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/ButtonComputer" to="." method="_on_ButtonComputer_pressed"]
@@ -251,5 +314,7 @@ color = Color(0, 0, 0, 0.392157)
 [connection signal="popup_hide" from="PopupCandidateLocations" to="." method="_on_popup_candidate_locations_popup_hide"]
 [connection signal="popup_hide" from="PopupNpc" to="." method="_on_popup_npc_popup_hide"]
 [connection signal="pressed" from="PopupNpc/Panel/ButtonCloseNpc" to="." method="_on_button_close_npc_pressed"]
+[connection signal="popup_hide" from="PopupMission" to="." method="_on_popup_mission_popup_hide"]
+[connection signal="pressed" from="PopupMission/Panel/ButtonCloseMission" to="." method="_on_button_close_mission_pressed"]
 [connection signal="game_current_status_retrieved" from="Communicator" to="." method="show_current_status"]
 [connection signal="went_to_facility" from="Communicator" to="." method="update_current_facility"]

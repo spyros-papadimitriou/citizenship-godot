@@ -24,6 +24,11 @@ const CANDIDATE_LOCATIONS_GROUP = "candidate_locations_group"
 @onready var label_npc = $PopupNpc/Panel/VBoxContainer/LabelNpc
 @onready var label_clue = $PopupNpc/Panel/VBoxContainer/LabelClue
 
+@onready var popup_mission = $PopupMission
+@onready var mission_title = $PopupMission/Panel/VBoxContainer/Title
+@onready var mission_description = $PopupMission/Panel/VBoxContainer/Description
+
+@onready var button_mission = $Panel/HBoxContainer/ButtonMission
 @onready var button_candidate_locations = $Panel/HBoxContainer/ButtonCandidateLocations
 @onready var button_facilities = $Panel/HBoxContainer/ButtonFacilities
 @onready var button_computer = $Panel/HBoxContainer/ButtonComputer
@@ -55,6 +60,8 @@ func show_current_status(game_current_status: GameCurrentStatus):
 	
 	create_title_text()
 	description.text = game_current_status.current_location.description
+	mission_title.text = game_current_status.mission.title
+	mission_description.text = game_current_status.mission.description
 		
 	var position_x: float = popup_facilities.size.x / 2 - 100
 	var i: int = 0
@@ -98,6 +105,7 @@ func show_current_status(game_current_status: GameCurrentStatus):
 
 func _on_ButtonFacilities_pressed():
 	popup_candidate_locations.hide()
+	popup_mission.hide()
 	if popup_facilities.visible:
 		button_close_facilities.release_focus()
 		popup_facilities.hide()
@@ -106,12 +114,22 @@ func _on_ButtonFacilities_pressed():
 		popup_facilities.show()
 
 func _on_ButtonCandidateLocations_pressed():
-	popup_candidate_locations.hide()
+	popup_facilities.hide()
+	popup_mission.hide()
 	if popup_candidate_locations.visible:
 		popup_candidate_locations.hide()
 	else:
 		lightbox.visible = true
 		popup_candidate_locations.show()
+
+func _on_button_mission_pressed() -> void:
+	popup_facilities.hide()
+	popup_candidate_locations.hide()
+	if popup_mission.visible:
+		popup_mission.hide()
+	else:
+		lightbox.visible = true
+		popup_mission.show()
 
 func select_facility(facility: Facility):
 	popup_facilities.hide()
@@ -176,7 +194,14 @@ func _on_popup_npc_popup_hide() -> void:
 func close_lightbox():
 	lightbox.visible = false;
 
-
 func _on_button_close_npc_pressed() -> void:
 	popup_npc.hide()
+	close_lightbox()
+
+func _on_button_close_mission_pressed() -> void:
+	popup_mission.hide()
+	close_lightbox()
+
+func _on_popup_mission_popup_hide() -> void:
+	button_mission.release_focus()
 	close_lightbox()
